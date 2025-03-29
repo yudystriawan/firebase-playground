@@ -11,7 +11,7 @@ const NewPropertyPage = () => {
           { label: "New Property" },
         ]}
       />
-      <Card>
+      <Card className="mt-5">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">New Property</CardTitle>
         </CardHeader>
