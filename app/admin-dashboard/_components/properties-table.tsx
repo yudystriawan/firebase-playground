@@ -18,7 +18,6 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
       pageSize: 1,
     },
   });
-  console.log({ totalPages });
 
   if (!data || data.length === 0) {
     return (
