@@ -185,7 +185,7 @@ const PropertyForm = ({ handleSubmit, submitButtonLabel }: Props) => {
         </div>
         <Button
           type="submit"
-          className="mx-auto mt-4 w-full max-w-md flex gap-2"
+          className="max-w-md mx-auto mt-2 w-full flex gap-2"
         >
           {submitButtonLabel}
         </Button>
