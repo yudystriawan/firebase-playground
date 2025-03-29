@@ -23,7 +23,7 @@ export const setToken = async ({
     const userRecord = await auth.getUser(verifiedToken.uid);
     if (
       process.env.ADMIN_EMAIL === userRecord.email &&
-      userRecord.customClaims?.admin
+      !userRecord.customClaims?.admin
     ) {
       auth.setCustomUserClaims(verifiedToken.uid, {
         admin: true,
@@ -39,8 +39,7 @@ export const setToken = async ({
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
-  } catch (error) {
-    console.error("Error setting token:", error);
-    throw new Error("Failed to set token");
+  } catch (e) {
+    console.log(e);
   }
 };
