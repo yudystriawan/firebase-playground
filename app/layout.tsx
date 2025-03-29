@@ -13,6 +13,9 @@ const poppins = Poppins({
   variable: "--font-poppins",
   style: ["normal", "italic"],
   display: "auto",
+  adjustFontFallback: true,
+  preload: true,
+  fallback: ["system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
