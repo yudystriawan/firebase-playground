@@ -39,8 +39,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           await setToken({ token, refreshToken });
         }
       } else {
-        console.log("Removing token");
-
         await removeToken();
       }
     });
