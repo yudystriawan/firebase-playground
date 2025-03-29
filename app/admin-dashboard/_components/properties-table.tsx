@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { getProperties } from "@/data/properties";
 import { formatPrice } from "@/lib/price-format";
-import { PencilIcon } from "lucide-react";
+import { EyeIcon, PencilIcon } from "lucide-react";
 import Link from "next/link";
 
 const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
@@ -55,8 +55,12 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
               <TableCell>{address}</TableCell>
               <TableCell>{formatPrice(property.price)}</TableCell>
               <TableCell>{property.status}</TableCell>
-              <TableCell>
-                view /{" "}
+              <TableCell className="flex gap-1 justify-end">
+                <Button asChild variant="outline" size="sm">
+                  <Link href={`/properties/${property.id}`}>
+                    <EyeIcon />
+                  </Link>
+                </Button>
                 <Button asChild variant="outline" size="sm">
                   <Link href={`/admin-dashboard/edit/${property.id}`}>
                     <PencilIcon />
