@@ -2,8 +2,9 @@ import BreadCrumbs from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon } from "lucide-react";
 import Link from "next/link";
+import PropertiesTable from "./_components/properties-table";
 
-const AdminDashboardPage = () => {
+const AdminDashboardPage = async () => {
   return (
     <div>
       <BreadCrumbs
@@ -19,6 +20,7 @@ const AdminDashboardPage = () => {
           <PlusCircleIcon /> New Property
         </Link>
       </Button>
+      <PropertiesTable />
     </div>
   );
 };
