@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -14,6 +15,7 @@ import {
 } from "./ui/dropdown-menu";
 
 const AuthButton = () => {
+  const router = useRouter();
   const auth = useAuth();
   return (
     <div>
@@ -58,6 +60,7 @@ const AuthButton = () => {
             <DropdownMenuItem
               onClick={async () => {
                 await auth.logout();
+                router.refresh();
               }}
             >
               Logout
