@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -120,4 +119,33 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  h1 {
+    @apply text-5xl font-bold;
+  }
+  h2 {
+    @apply text-4xl font-bold my-4;
+  }
+  h3 {
+    @apply text-3xl font-bold my-4;
+  }
+  h4 {
+    @apply text-2xl font-bold my-4;
+  }
+  h5 {
+    @apply text-xl font-bold my-4;
+  }
+  h6 {
+    @apply text-lg font-bold my-4;
+  }
+  p {
+    @apply my-4 font-normal text-base;
+  }
+  ul {
+    @apply list-disc my-4 ml-4;
+  }
+  ol {
+    @apply list-decimal my-4 ml-4;
+  }
+
 }
