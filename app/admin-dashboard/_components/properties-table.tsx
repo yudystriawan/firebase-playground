@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getProperties } from "@/data/properties";
+import { formatPrice } from "@/lib/price-format";
 import { PencilIcon } from "lucide-react";
 import Link from "next/link";
 
@@ -52,7 +53,7 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
           return (
             <TableRow key={property.id}>
               <TableCell>{address}</TableCell>
-              <TableCell>{property.price}</TableCell>
+              <TableCell>{formatPrice(property.price)}</TableCell>
               <TableCell>{property.status}</TableCell>
               <TableCell>
                 view /{" "}
