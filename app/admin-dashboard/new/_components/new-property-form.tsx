@@ -6,8 +6,8 @@ import { PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
+import PropertyForm from "../../_components/property-form";
 import { createProperty } from "../actions";
-import PropertyForm from "./property-form";
 
 const NewPropertyForm = () => {
   const auth = useAuth();
