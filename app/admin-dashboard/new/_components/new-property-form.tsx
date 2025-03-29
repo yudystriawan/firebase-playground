@@ -14,8 +14,6 @@ const NewPropertyForm = () => {
   const router = useRouter();
 
   const handleSubmit = async (data: z.infer<typeof propertyFormSchema>) => {
-    console.log("Form submitted with data:", data);
-
     const token = await auth?.currentUser?.getIdToken();
     if (!token) {
       console.error("No token found");

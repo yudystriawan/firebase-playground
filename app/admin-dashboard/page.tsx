@@ -11,8 +11,6 @@ const AdminDashboardPage = async ({
   searchParams: Promise<SearchParams>;
 }) => {
   const { page }: { page?: string } = await searchParams;
-
-  console.log(page);
   return (
     <div>
       <BreadCrumbs
