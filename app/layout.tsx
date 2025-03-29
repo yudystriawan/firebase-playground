@@ -33,7 +33,15 @@ export default function RootLayout({
               <HomeIcon />
               <span>My App</span>
             </Link>
-            <ul>
+            <ul className="flex gap-6 items-center">
+              <li>
+                <Link
+                  href="/propery-search"
+                  className="uppercase tracking-widest hover:underline"
+                >
+                  Property search
+                </Link>
+              </li>
               <li>
                 <AuthButton />
               </li>
