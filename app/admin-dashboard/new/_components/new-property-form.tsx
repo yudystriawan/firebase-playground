@@ -20,10 +20,7 @@ const NewPropertyForm = () => {
       return;
     }
 
-    const response = await createProperty({
-      ...data,
-      token: token,
-    });
+    const response = await createProperty(data, token);
 
     if (response.status !== 200) {
       toast.error("Opps", {
