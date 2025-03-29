@@ -37,9 +37,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (token && refreshToken) {
           await setToken({ token, refreshToken });
-        } else {
-          await removeToken();
         }
+      } else {
+        console.log("Removing token");
+
+        await removeToken();
       }
     });
     return () => unsubcribe();
