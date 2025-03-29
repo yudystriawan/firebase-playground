@@ -40,6 +40,6 @@ export const setToken = async ({
       secure: process.env.NODE_ENV === "production",
     });
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
