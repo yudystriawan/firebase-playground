@@ -22,3 +22,18 @@ if (!currentApps.length) {
 }
 
 export { auth, firestore };
+
+export const getTotalPages = async (
+  firestoreQuery: FirebaseFirestore.Query<
+    FirebaseFirestore.DocumentData,
+    FirebaseFirestore.DocumentData
+  >,
+  pageSize: number
+) => {
+  const queryCount = firestoreQuery.count();
+  const countSnapshot = await queryCount.get();
+  const countData = countSnapshot.data();
+  const total = countData?.count || 0;
+  const totalPages = Math.ceil(total / pageSize);
+  return totalPages;
+};
