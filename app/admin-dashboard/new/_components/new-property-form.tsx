@@ -1,6 +1,7 @@
 "use client";
 
 import { propertyFormSchema } from "@/validation/propertySchema";
+import { PlusCircleIcon } from "lucide-react";
 import { z } from "zod";
 import PropertyForm from "./property-form";
 
@@ -10,7 +11,14 @@ const NewPropertyForm = () => {
   };
   return (
     <div>
-      <PropertyForm handleSubmit={handleSubmit} />
+      <PropertyForm
+        handleSubmit={handleSubmit}
+        submitButtonLabel={
+          <>
+            <PlusCircleIcon /> Create Property
+          </>
+        }
+      />
     </div>
   );
 };
