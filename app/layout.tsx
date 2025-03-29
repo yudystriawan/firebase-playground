@@ -24,7 +24,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("poppins", poppins.className);
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
