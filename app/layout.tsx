@@ -1,5 +1,6 @@
 import AuthButton from "@/components/auth-button";
 import { AuthProvider } from "@/context/auth";
+import { HomeIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
@@ -7,8 +8,6 @@ import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-poppins",
-  display: "swap",
   weight: ["100", "300", "400", "500", "600", "700", "800", "900"],
 });
 
@@ -27,7 +26,13 @@ export default function RootLayout({
       <body className={`${poppins.className} antialiased`}>
         <AuthProvider>
           <nav className="bg-sky-950 text-white p-5 h-24 flex items-center justify-between">
-            <Link href="/">My App</Link>
+            <Link
+              href="/"
+              className="text-3xl tracking-widest flex gap-2 items-center uppercase"
+            >
+              <HomeIcon />
+              <span>My App</span>
+            </Link>
             <ul>
               <li>
                 <AuthButton />
