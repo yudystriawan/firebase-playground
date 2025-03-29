@@ -12,6 +12,7 @@ import { getProperties } from "@/data/properties";
 import { formatPrice } from "@/lib/price-format";
 import { EyeIcon, PencilIcon } from "lucide-react";
 import Link from "next/link";
+import PropertyStatusBadge from "./property-status-badge";
 
 const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
   const { data, totalPages } = await getProperties({
@@ -54,7 +55,9 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
             <TableRow key={property.id}>
               <TableCell>{address}</TableCell>
               <TableCell>{formatPrice(property.price)}</TableCell>
-              <TableCell>{property.status}</TableCell>
+              <TableCell>
+                <PropertyStatusBadge status={property.status} />
+              </TableCell>
               <TableCell className="flex gap-1 justify-end">
                 <Button asChild variant="outline" size="sm">
                   <Link href={`/properties/${property.id}`}>
