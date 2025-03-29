@@ -40,5 +40,7 @@ export const createProperty = async (data: {
 
   return {
     propertyId: property.id,
+    message: "Property created successfully",
+    status: 200,
   };
 };
