@@ -18,7 +18,7 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
   const { data, totalPages } = await getProperties({
     pagination: {
       page,
-      pageSize: 1,
+      pageSize: 2,
     },
   });
 
@@ -78,7 +78,13 @@ const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
         <TableRow>
           <TableCell colSpan={4} className="text-center">
             {Array.from({ length: totalPages }).map((_, index) => (
-              <Button key={index} asChild variant="outline" className="mx-1">
+              <Button
+                key={index}
+                variant="outline"
+                className="mx-1"
+                disabled={page === index + 1}
+                asChild={page !== index + 1}
+              >
                 <Link href={`/admin-dashboard?page=${index + 1}`}>
                   {index + 1}
                 </Link>
