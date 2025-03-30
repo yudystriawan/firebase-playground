@@ -25,8 +25,6 @@ type Props = {
 const MultiImageUploader = ({ images = [], onImagesChange }: Props) => {
   const uploadInputRef = useRef<HTMLInputElement>(null);
 
-  console.log("images", images);
-
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = [...(event.target.files || [])];
 
@@ -121,6 +119,7 @@ const MultiImageUploader = ({ images = [], onImagesChange }: Props) => {
                   )}
                 </Draggable>
               ))}
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
