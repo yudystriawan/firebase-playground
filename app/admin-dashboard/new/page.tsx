@@ -1,6 +1,6 @@
 import BreadCrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import NewPropertyForm from "./_components/new-property-form";
+import CreatePropertyForm from "./_components/create-property-form";
 
 const NewPropertyPage = () => {
   return (
@@ -16,7 +16,7 @@ const NewPropertyPage = () => {
           <CardTitle className="text-3xl font-bold">New Property</CardTitle>
         </CardHeader>
         <CardContent>
-          <NewPropertyForm />
+          <CreatePropertyForm />
         </CardContent>
       </Card>
     </div>

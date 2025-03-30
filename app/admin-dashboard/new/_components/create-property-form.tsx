@@ -11,7 +11,7 @@ import { z } from "zod";
 import PropertyForm from "../../_components/property-form";
 import { createProperty, createPropertyImages } from "../actions";
 
-const NewPropertyForm = () => {
+const CreatePropertyForm = () => {
   const auth = useAuth();
   const router = useRouter();
 
@@ -73,4 +73,4 @@ const NewPropertyForm = () => {
   );
 };
 
-export default NewPropertyForm;
+export default CreatePropertyForm;
