@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { storageUrlMapper } from "@/lib/storage-url-mapper";
 import { propertySchema } from "@/validation/propertySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -216,9 +217,7 @@ const PropertyForm = ({
                   images={field.value}
                   urlFormatter={(image) => {
                     if (!image.file) {
-                      return `https://firebasestorage.googleapis.com/v0/b/playground-29d19.firebasestorage.app/o/${encodeURIComponent(
-                        image.url
-                      )}?alt=media`;
+                      return storageUrlMapper(image.url);
                     }
 
                     return image.url;
