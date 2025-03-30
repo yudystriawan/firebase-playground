@@ -2,6 +2,7 @@
 
 import { auth } from "@/firebase/server";
 import { registerUserFormSchema } from "@/validation/registerUserSchema";
+import { FirebaseError } from "firebase-admin";
 
 export const registerUser = async (data: {
   email: string;
@@ -29,10 +30,9 @@ export const registerUser = async (data: {
       message: "User registered successfully",
       status: 200,
     };
-  } catch (error) {
-    console.error("Error register user:", error);
+  } catch (error: FirebaseError | any) {
     return {
-      message: "Could not register user",
+      message: error.message ?? "Could not register user",
       status: 500,
     };
   }
