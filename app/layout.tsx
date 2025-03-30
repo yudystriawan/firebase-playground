@@ -10,11 +10,6 @@ import "./globals.css";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  display: "auto",
-  adjustFontFallback: true,
-  preload: true,
-  fallback: ["system-ui", "sans-serif"],
 });
 
 export const metadata: Metadata = {
@@ -37,7 +32,7 @@ export default function RootLayout({
               className="text-3xl tracking-widest flex gap-2 items-center uppercase"
             >
               <HomeIcon />
-              <span>My App</span>
+              <span>My App </span>
             </Link>
             <ul className="flex gap-6 items-center">
               <li>
