@@ -12,7 +12,7 @@ import { updateProperty } from "../actions";
 
 type Props = Property;
 
-const EditPropertyForm = ({
+const UpdatePropertyForm = ({
   id,
   address1,
   address2,
@@ -23,6 +23,7 @@ const EditPropertyForm = ({
   bedrooms,
   bathrooms,
   status,
+  images = [],
 }: Props) => {
   const auth = useAuth();
   const router = useRouter();
@@ -66,10 +67,14 @@ const EditPropertyForm = ({
           bedrooms,
           bathrooms,
           status,
+          images: images.map((image) => ({
+            id: image,
+            url: image,
+          })),
         }}
       />
     </div>
   );
 };
 
-export default EditPropertyForm;
+export default UpdatePropertyForm;
