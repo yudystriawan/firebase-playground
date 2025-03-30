@@ -40,7 +40,7 @@ const LoginForm = () => {
     try {
       await auth?.loginWithEmailAndPassword(data.email, data.password);
       toast.success("Login successful!");
-      router.push("/");
+      router.refresh();
     } catch (error: FirebaseError | any) {
       console.error("Login error:", error);
       if (error.code === "auth/invalid-credential") {
@@ -54,50 +54,52 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormControl>
-                  <Input {...field} placeholder="Email" type="email"></Input>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => {
-            return (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder="Password"
-                    type="password"
-                  ></Input>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-        <Button type="submit">Login</Button>
-        <div>
-          Forgotten your password?{" "}
-          <Link href="/forgot-password" className="pl-2 underline">
-            Reset it here.
-          </Link>
-        </div>
-        <div className="text-center pb-5 ">or</div>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <fieldset
+          className="flex flex-col gap-4"
+          disabled={form.formState.isSubmitting}
+        >
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormControl>
+                    <Input {...field} placeholder="Email" type="email"></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => {
+              return (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Password"
+                      type="password"
+                    ></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              );
+            }}
+          />
+          <Button type="submit">Login</Button>
+          <div>
+            Forgotten your password?{" "}
+            <Link href="/forgot-password" className="pl-2 underline">
+              Reset it here.
+            </Link>
+          </div>
+          <div className="text-center pb-5 ">or</div>
+        </fieldset>
       </form>
       <ContinueWithGoogleButton />
     </Form>
