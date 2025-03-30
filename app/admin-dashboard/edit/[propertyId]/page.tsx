@@ -2,7 +2,7 @@ import BreadCrumbs from "@/components/breadcrumbs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getPropertyById } from "@/data/properties";
 import { Params } from "next/dist/server/request/params";
-import EditPropertyForm from "./_components/edit-property-form";
+import UpdatePropertyForm from "./_components/update-property-form";
 
 const EditPropertyPage = async ({ params }: { params: Promise<Params> }) => {
   const resolvedParams = await params;
@@ -27,7 +27,7 @@ const EditPropertyPage = async ({ params }: { params: Promise<Params> }) => {
           <CardTitle className="text-3xl font-bold">Edit Property</CardTitle>
         </CardHeader>
         <CardContent>
-          <EditPropertyForm
+          <UpdatePropertyForm
             id={property.id}
             address1={property.address1}
             address2={property.address2}
@@ -38,6 +38,7 @@ const EditPropertyPage = async ({ params }: { params: Promise<Params> }) => {
             postcode={property.postcode}
             price={property.price}
             status={property.status}
+            images={property.images || []}
           />
         </CardContent>
       </Card>
