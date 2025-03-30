@@ -1,34 +1,58 @@
 "use client";
 
 import { useAuth } from "@/context/auth";
-import { propertyFormSchema } from "@/validation/propertySchema";
+import { storage } from "@/firebase/client";
+import { propertySchema } from "@/validation/propertySchema";
+import { ref, uploadBytesResumable, UploadTask } from "firebase/storage";
 import { PlusCircleIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 import PropertyForm from "../../_components/property-form";
-import { createProperty } from "../actions";
+import { createProperty, createPropertyImages } from "../actions";
 
 const NewPropertyForm = () => {
   const auth = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (data: z.infer<typeof propertyFormSchema>) => {
+  const handleSubmit = async (data: z.infer<typeof propertySchema>) => {
     const token = await auth?.currentUser?.getIdToken();
     if (!token) {
       console.error("No token found");
       return;
     }
 
-    const response = await createProperty(data, token);
+    const { images, ...rest } = data;
 
-    if (response.status !== 200) {
+    const response = await createProperty(rest, token);
+
+    if (response.status !== 200 || !response.propertyId) {
       toast.error("Opps", {
         description:
           response.message || "An error occurred while creating the property",
       });
       return;
     }
+
+    const uploadTasks: UploadTask[] = [];
+    const paths: string[] = [];
+    images.forEach((image, index) => {
+      if (image.file) {
+        const path = `properties/${
+          response.propertyId
+        }/${Date.now()}-${index}-${image.file.name}`;
+        paths.push(path);
+
+        const storageRef = ref(storage, path);
+        uploadTasks.push(uploadBytesResumable(storageRef, image.file));
+      }
+    });
+
+    await Promise.all(uploadTasks);
+    await createPropertyImages(
+      { propertyId: response.propertyId, images: paths },
+      token
+    );
 
     toast.success("Success", {
       description: "Property created successfully",
