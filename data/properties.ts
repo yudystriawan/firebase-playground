@@ -38,22 +38,27 @@ export const getProperties = async (options?: GetPropertiesOptions) => {
     query = query.where("status", "in", status);
   }
 
-  const totalPages = await getTotalPages(query, pageSize);
+  try {
+    const totalPages = await getTotalPages(query, pageSize);
 
-  const snapshot = await query
-    .limit(pageSize)
-    .offset((page - 1) * pageSize)
-    .get();
+    const snapshot = await query
+      .limit(pageSize)
+      .offset((page - 1) * pageSize)
+      .get();
 
-  const properties = snapshot.docs.map(
-    (doc) =>
-      ({
-        id: doc.id,
-        ...doc.data(),
-      } as Property)
-  );
+    const properties = snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as Property)
+    );
 
-  return { data: properties, totalPages };
+    return { data: properties, totalPages };
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+    return { data: [], totalPages: 0 };
+  }
 };
 
 export const getPropertyById = async (id: string) => {
