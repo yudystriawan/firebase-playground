@@ -1,10 +1,19 @@
 import PropertyStatusBadge from "@/app/admin-dashboard/_components/property-status-badge";
-import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { getPropertyById } from "@/data/properties";
-import { ArrowLeftIcon, BathIcon, BedIcon } from "lucide-react";
+import { storageUrlMapper } from "@/lib/storage-url-mapper";
+import { BathIcon, BedIcon } from "lucide-react";
 import { Params } from "next/dist/server/request/params";
+import Image from "next/image";
 import Markdown from "react-markdown";
 import { formatPrice } from "../../../lib/price-format";
+import BackButton from "./_components/back-button";
 
 const PropertyPage = async ({ params }: { params: Promise<Params> }) => {
   const { propertyId } = await params;
@@ -20,11 +29,32 @@ const PropertyPage = async ({ params }: { params: Promise<Params> }) => {
   return (
     <div className="grid grid-cols-[1fr_500px]">
       <div>
-        carousel{" "}
+        {!!property.images && (
+          <Carousel>
+            <CarouselContent>
+              {property.images.map((image, index) => (
+                <CarouselItem key={index}>
+                  <div className="relative h-[80vh] min-h-80">
+                    <Image
+                      src={storageUrlMapper(image)}
+                      alt={`Image ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {property.images.length > 1 && (
+              <>
+                <CarouselPrevious className="translate-x-24 size-12" />
+                <CarouselNext className="-translate-x-24 " />
+              </>
+            )}
+          </Carousel>
+        )}
         <div className="property-description max-w-screen-md mx-auto py-10 px-4">
-          <Button>
-            <ArrowLeftIcon /> Back
-          </Button>
+          <BackButton />
           <Markdown>{property.description}</Markdown>
         </div>
       </div>
