@@ -214,6 +214,15 @@ const PropertyForm = ({
                     form.setValue("images", images);
                   }}
                   images={field.value}
+                  urlFormatter={(image) => {
+                    if (!image.file) {
+                      return `https://firebasestorage.googleapis.com/v0/b/playground-29d19.firebasestorage.app/o/${encodeURIComponent(
+                        image.url
+                      )}?alt=media`;
+                    }
+
+                    return image.url;
+                  }}
                 />
               </FormControl>
               <FormMessage />
