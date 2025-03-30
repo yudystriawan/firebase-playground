@@ -48,10 +48,7 @@ const RegisterForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)}>
         <fieldset
           disabled={form.formState.isSubmitting}
           className="flex flex-col gap-4"
@@ -120,11 +117,13 @@ const RegisterForm = () => {
               );
             }}
           />
+          <Button type="submit">
+            {form.formState.isSubmitting && (
+              <Loader2 className="animate-spin" />
+            )}{" "}
+            Register
+          </Button>
         </fieldset>
-        <Button type="submit" disabled={form.formState.isSubmitting}>
-          {form.formState.isSubmitting && <Loader2 className="animate-spin" />}{" "}
-          Register
-        </Button>
         <div className="text-center">or</div>
       </form>
       <ContinueWithGoogleButton />
