@@ -140,7 +140,7 @@
     @apply text-lg font-bold my-4;
   }
   p {
-    @apply my-4 font-normal text-base;
+    @apply font-normal text-base;
   }
 
 }
