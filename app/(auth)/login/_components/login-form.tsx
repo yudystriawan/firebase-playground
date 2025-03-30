@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/auth";
 import { passwordValidation } from "@/validation/registerUserSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FirebaseError } from "firebase/app";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -40,9 +41,14 @@ const LoginForm = () => {
       await auth?.loginWithEmailAndPassword(data.email, data.password);
       toast.success("Login successful!");
       router.push("/");
-    } catch (error) {
+    } catch (error: FirebaseError | any) {
       console.error("Login error:", error);
-      toast.error("Login failed. Please check your credentials.");
+      if (error.code === "auth/invalid-credential") {
+        toast.error("Login failed. Please check your credentials.");
+        return;
+      }
+
+      toast.error("Login failed. Please try again.");
     }
   };
 
