@@ -16,3 +16,15 @@ export const propertyFormSchema = z.object({
   bathrooms: z.coerce.number().min(0, "Bathrooms must be at least 0"),
   status: z.enum(["draft", "for-sale", "withdrawn", "sold"]),
 });
+
+export const propertyImageSchema = z.object({
+  images: z.array(
+    z.object({
+      id: z.string(),
+      url: z.string(),
+      file: z.instanceof(File).optional(),
+    })
+  ),
+});
+
+export const propertySchema = propertyFormSchema.and(propertyImageSchema);
