@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 import PropertyForm from "../../_components/property-form";
-import { createProperty, createPropertyImages } from "../actions";
+import { createPropertyImages } from "../../actions";
+import { createProperty } from "../actions";
 
 const CreatePropertyForm = () => {
   const auth = useAuth();
