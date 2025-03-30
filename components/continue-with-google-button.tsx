@@ -12,8 +12,12 @@ const ContinueWithGoogleButton = () => {
     <Button
       variant="outline"
       onClick={async () => {
-        await auth?.loginWithGoogle();
-        router.refresh();
+        try {
+          await auth?.loginWithGoogle();
+          router.refresh();
+        } catch (error) {
+          // Handle error (e.g., show a toast notification)
+        }
       }}
       className="w-full"
     >
