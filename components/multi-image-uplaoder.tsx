@@ -20,9 +20,14 @@ export type ImageUpload = {
 type Props = {
   images?: ImageUpload[];
   onImagesChange: (images: ImageUpload[]) => void;
+  urlFormatter?: (image: ImageUpload) => string;
 };
 
-const MultiImageUploader = ({ images = [], onImagesChange }: Props) => {
+const MultiImageUploader = ({
+  images = [],
+  onImagesChange,
+  urlFormatter,
+}: Props) => {
   const uploadInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +94,7 @@ const MultiImageUploader = ({ images = [], onImagesChange }: Props) => {
                       <div className="bg-gray-100 rounded-lg flex gap-2 items-center overflow-hidden">
                         <div className="size-16 relative">
                           <Image
-                            src={image.url}
+                            src={urlFormatter ? urlFormatter(image) : image.url}
                             alt="as"
                             fill
                             className="object-cover"
