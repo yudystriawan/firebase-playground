@@ -1,9 +1,17 @@
 "use client";
 
 import PropertyForm from "@/app/admin-dashboard/_components/property-form";
+import { createPropertyImages } from "@/app/admin-dashboard/actions";
 import { useAuth } from "@/context/auth";
+import { storage } from "@/firebase/client";
 import { Property } from "@/types/property";
-import { propertyFormSchema } from "@/validation/propertySchema";
+import { propertySchema } from "@/validation/propertySchema";
+import {
+  deleteObject,
+  ref,
+  uploadBytesResumable,
+  UploadTask,
+} from "firebase/storage";
 import { SaveIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -28,13 +36,15 @@ const UpdatePropertyForm = ({
   const auth = useAuth();
   const router = useRouter();
 
-  const handleSubmit = async (data: z.infer<typeof propertyFormSchema>) => {
+  const handleSubmit = async (data: z.infer<typeof propertySchema>) => {
     const token = await auth?.currentUser?.getIdToken();
     if (!token) {
       console.error("No token found");
       return;
     }
-    const response = await updateProperty({ ...data, id }, token);
+
+    const { images: newImages, ...rest } = data;
+    const response = await updateProperty({ ...rest, id }, token);
 
     if (response.status !== 200) {
       toast.error("Opps", {
@@ -43,6 +53,40 @@ const UpdatePropertyForm = ({
       });
       return;
     }
+
+    const storageTask: (UploadTask | Promise<void>)[] = [];
+    const imagesToDelete = images.filter(
+      (image) => !newImages.find((img) => img.url === image)
+    );
+
+    imagesToDelete.forEach((image) => {
+      storageTask.push(deleteObject(ref(storage, image)));
+    });
+
+    const paths: string[] = [];
+    newImages.forEach((image, index) => {
+      if (image.file) {
+        const path = `properties/${id}/${Date.now()}-${index}-${
+          image.file.name
+        }`;
+        paths.push(path);
+
+        const storageRef = ref(storage, path);
+        storageTask.push(uploadBytesResumable(storageRef, image.file));
+      } else {
+        paths.push(image.url);
+      }
+    });
+
+    await Promise.all(storageTask);
+    await createPropertyImages(
+      {
+        propertyId: id,
+        images: paths,
+      },
+      token
+    );
+
     toast.success("Success", {
       description: "Property updated successfully",
     });
