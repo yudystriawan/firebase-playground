@@ -1,4 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import Link from "next/link";
 import RegisterForm from "./_components/register-form";
 
 const RegisterPage = () => {
@@ -10,6 +17,12 @@ const RegisterPage = () => {
       <CardContent>
         <RegisterForm />
       </CardContent>
+      <CardFooter>
+        Already have an account?
+        <Link href="/login" className="pl-2 underline">
+          Login here
+        </Link>
+      </CardFooter>
     </Card>
   );
 };
