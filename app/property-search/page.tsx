@@ -105,6 +105,33 @@ const PropertySearch = async (props: {
           );
         })}
       </div>
+      <div className="flex gap-2 items-center justify-center mt-5">
+        {Array.from({ length: totalPages }, (_, index) => {
+          const newSearchParams = new URLSearchParams();
+
+          if (minPrice) newSearchParams.set("minPrice", minPrice.toString());
+          if (maxPrice) newSearchParams.set("maxPrice", maxPrice.toString());
+          if (minBedrooms)
+            newSearchParams.set("minBedrooms", minBedrooms.toString());
+          newSearchParams.set("page", (index + 1).toString());
+
+          return (
+            <Button
+              key={index}
+              asChild={page !== index + 1}
+              disabled={page === index + 1}
+              variant="outline"
+            >
+              <Link
+                key={index}
+                href={`/property-search?${newSearchParams.toString()}`}
+              >
+                {index + 1}
+              </Link>
+            </Button>
+          );
+        })}
+      </div>
     </div>
   );
 };
