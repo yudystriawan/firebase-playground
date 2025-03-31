@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getUserFavorites } from "@/data/favorites";
 import { getProperties } from "@/data/properties";
 import { SearchParams } from "next/dist/server/request/search-params";
 import Link from "next/link";
@@ -37,6 +38,7 @@ const PropertySearch = async (props: {
 
   const { data, totalPages } = properties;
 
+  const favorites = await getUserFavorites();
   return (
     <div className="max-w-screen-lg mx-auto">
       <h1 className="text-4xl font-bold py-5">Property Search</h1>
@@ -52,7 +54,11 @@ const PropertySearch = async (props: {
       </Card>
       <div className="grid grid-cols-3 mt-5 gap-5">
         {data.map((property) => (
-          <PropertyCard key={property.id} property={property} />
+          <PropertyCard
+            key={property.id}
+            property={property}
+            isFavorite={favorites[property.id]}
+          />
         ))}
       </div>
       <div className="flex gap-2 items-center justify-center mt-5">
