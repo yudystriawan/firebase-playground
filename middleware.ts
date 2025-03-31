@@ -50,9 +50,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  // Check if the admin is trying to access their account page
-  const isAccountPage = request.nextUrl.pathname.startsWith("/account");
-  if (isAccountPage && isAdmin) {
+  // Check if the user is trying to access the favorites page
+  const isFavoritesPage = request.nextUrl.pathname.startsWith(
+    "/account/my-favorites"
+  );
+  if (isFavoritesPage && isAdmin) {
     // Redirect admin to the home page
     return NextResponse.redirect(new URL("/", request.url));
   }
