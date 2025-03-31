@@ -12,7 +12,7 @@ import { getProperties } from "@/data/properties";
 import { formatPrice } from "@/lib/price-format";
 import { EyeIcon, PencilIcon } from "lucide-react";
 import Link from "next/link";
-import PropertyStatusBadge from "./property-status-badge";
+import PropertyStatusBadge from "../../../components/property-status-badge";
 
 const PropertiesTable = async ({ page = 1 }: { page?: number }) => {
   const { data, totalPages } = await getProperties({

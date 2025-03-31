@@ -1,4 +1,4 @@
-import PropertyStatusBadge from "@/app/admin-dashboard/_components/property-status-badge";
+import PropertyStatusBadge from "@/components/property-status-badge";
 import {
   Carousel,
   CarouselContent,

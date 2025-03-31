@@ -71,3 +71,20 @@ export const getPropertyById = async (id: string) => {
 
   return property;
 };
+
+export const getPropertiesByIds = async (propertyIds: string[]) => {
+  const snapshot = await firestore
+    .collection("properties")
+    .where("__name__", "in", propertyIds)
+    .get();
+
+  const propertiesData = snapshot.docs.map(
+    (doc) =>
+      ({
+        id: doc.id,
+        ...doc.data(),
+      } as Property)
+  );
+
+  return propertiesData;
+};
