@@ -1,9 +1,16 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/firebase/server";
 import { DecodedIdToken } from "firebase-admin/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import DeleteAccountButton from "./_components/delete-account-button";
 import UpdatePasswordForm from "./_components/update-password-form";
 
 const AccountPage = async () => {
@@ -36,6 +43,12 @@ const AccountPage = async () => {
           <div>{decodedToken.email}</div>
           {!!isPasswordProvider && <UpdatePasswordForm />}
         </CardContent>
+        {!decodedToken.admin && (
+          <CardFooter className="flex flex-col items-start">
+            <h2 className="text-red-500 text-2xl font-bold">Danger Zone</h2>
+            <DeleteAccountButton />
+          </CardFooter>
+        )}
       </Card>
     </div>
   );
