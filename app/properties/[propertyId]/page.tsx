@@ -15,6 +15,8 @@ import Markdown from "react-markdown";
 import { formatPrice } from "../../../lib/price-format";
 import BackButton from "./_components/back-button";
 
+export const dynamic = "force-dynamic";
+
 const PropertyPage = async ({ params }: { params: Promise<Params> }) => {
   const { propertyId } = await params;
   const property = await getPropertyById(propertyId!.toString());
