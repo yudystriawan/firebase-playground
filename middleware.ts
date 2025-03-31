@@ -10,11 +10,13 @@ export async function middleware(request: NextRequest) {
 
   const isLoginPage = request.nextUrl.pathname.startsWith("/login");
   const isRegisterPage = request.nextUrl.pathname.startsWith("/register");
+  const isPropertySearchPage =
+    request.nextUrl.pathname.startsWith("/property-search");
 
   // Check if there is no token in the cookies
   if (!token) {
     // Allow access to the login or register page if no token is present
-    if (isLoginPage || isRegisterPage) {
+    if (isLoginPage || isRegisterPage || isPropertySearchPage) {
       return NextResponse.next();
     }
     // Redirect to the login page if trying to access protected routes without a token
@@ -66,5 +68,6 @@ export const config = {
     "/register",
     "/account",
     "/account/:path*",
+    "/property-search",
   ],
 };
