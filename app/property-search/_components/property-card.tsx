@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ToggleFavoriteButton from "./toggle-favorite-button";
 
-const PropertyCard = (props: { property: Property }) => {
+const PropertyCard = (props: { property: Property; isFavorite: boolean }) => {
   const property = props.property;
 
   const addressLine = [
@@ -24,7 +24,10 @@ const PropertyCard = (props: { property: Property }) => {
     <Card key={property.id} className="py-0 overflow-hidden">
       <CardContent className="px-0">
         <div className="h-40 relative bg-sky-50 text-zinc-400 flex flex-col justify-center items-center">
-          <ToggleFavoriteButton />
+          <ToggleFavoriteButton
+            propertyId={property.id}
+            isFavorite={props.isFavorite}
+          />
           {!!property.images?.[0] && (
             <Image
               fill
