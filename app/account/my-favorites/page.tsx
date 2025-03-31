@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -83,7 +84,7 @@ const MyFavoritesPage = async (props: {
                       <PropertyStatusBadge status={property?.status} />
                     )}
                   </TableCell>
-                  <TableCell className="flex justify-end">
+                  <TableCell className="flex justify-end gap-1">
                     <Button variant="outline" asChild>
                       <Link href={`/properties/${property?.id}`}>
                         <EyeIcon />
@@ -97,6 +98,28 @@ const MyFavoritesPage = async (props: {
               );
             })}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3} className="text-center">
+                {Array.from({ length: totalPages }).map((_, index) => {
+                  const pageNumber = index + 1;
+                  return (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className="mx-1"
+                      disabled={parsedPage === index + 1}
+                      asChild={parsedPage !== index + 1}
+                    >
+                      <Link href={`/account/my-favorites?page=${index + 1}`}>
+                        {index + 1}
+                      </Link>
+                    </Button>
+                  );
+                })}
+              </TableCell>
+            </TableRow>
+          </TableFooter>
         </Table>
       )}
     </div>
