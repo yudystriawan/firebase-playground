@@ -3,11 +3,13 @@ import { getApps, ServiceAccount } from "firebase-admin/app";
 import { Auth, getAuth } from "firebase-admin/auth";
 import { Firestore, getFirestore } from "firebase-admin/firestore";
 
-import serviceAccount from "../service-account-key.json";
-
 let firestore: Firestore;
 let auth: Auth;
 const currentApps = getApps();
+
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
+);
 
 if (!currentApps.length) {
   const app = admin.initializeApp({
