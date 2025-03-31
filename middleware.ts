@@ -8,24 +8,31 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const token = cookieStore.get("firebaseAuthToken")?.value;
 
-  const isLoginPage = request.nextUrl.pathname.startsWith("/login");
-  const isRegisterPage = request.nextUrl.pathname.startsWith("/register");
-  const isPropertySearchPage =
-    request.nextUrl.pathname.startsWith("/property-search");
+  const { pathname } = request.nextUrl;
+
+  const isLoginPage = pathname.startsWith("/login");
+  const isRegisterPage = pathname.startsWith("/register");
+  const isPropertySearchPage = pathname.startsWith("/property-search");
+  const isForgotPasswordPage = pathname.startsWith("/forgot-password");
 
   // Check if there is no token in the cookies
   if (!token) {
-    // Allow access to the login or register page if no token is present
-    if (isLoginPage || isRegisterPage || isPropertySearchPage) {
+    // If the user is not logged in and tries to access protected routes,
+    if (
+      isLoginPage ||
+      isRegisterPage ||
+      isPropertySearchPage ||
+      isForgotPasswordPage
+    ) {
       return NextResponse.next();
     }
     // Redirect to the login page if trying to access protected routes without a token
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If the user is already logged in (has a token) and tries to access the login or register page,
-  // redirect them to the home page as they don't need to log in or register again.
-  if (isLoginPage || isRegisterPage) {
+  // If the user is already logged in (has a token) and tries to access these pages,
+  // redirect them to the home page.
+  if (isLoginPage || isRegisterPage || isForgotPasswordPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -35,15 +42,13 @@ export async function middleware(request: NextRequest) {
     // Redirect to the refresh token API with the current path as a redirect parameter
     return NextResponse.redirect(
       new URL(
-        `/api/refresh-token?redirect=${encodeURIComponent(
-          request.nextUrl.pathname
-        )}`,
+        `/api/refresh-token?redirect=${encodeURIComponent(pathname)}`,
         request.url
       )
     );
   }
 
-  const isAdminPage = request.nextUrl.pathname.startsWith("/admin-dashboard");
+  const isAdminPage = pathname.startsWith("/admin-dashboard");
   const isAdmin = decodedToken.admin;
   // Check if the user is trying to access admin routes
   if (isAdminPage && !isAdmin) {
@@ -51,9 +56,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check if the user is trying to access the favorites page
-  const isFavoritesPage = request.nextUrl.pathname.startsWith(
-    "/account/my-favorites"
-  );
+  const isFavoritesPage = pathname.startsWith("/account/my-favorites");
   if (isFavoritesPage && isAdmin) {
     // Redirect admin to the home page
     return NextResponse.redirect(new URL("/", request.url));
@@ -71,5 +74,6 @@ export const config = {
     "/account",
     "/account/:path*",
     "/property-search",
+    "/forgot-password",
   ],
 };
