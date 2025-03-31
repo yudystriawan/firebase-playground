@@ -54,7 +54,7 @@ const AuthButton = () => {
             )}
             {!auth.customClaims?.admin && (
               <DropdownMenuItem asChild>
-                <Link href="/account/my-favourites">My Favourites</Link>
+                <Link href="/account/my-favorites">My Favorites</Link>
               </DropdownMenuItem>
             )}
             <DropdownMenuItem
