@@ -41,10 +41,17 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  // Check if the user is not an admin
-  // If the decoded token does not have the 'admin' property set to true,
-  // redirect the user to the home page as they are not authorized to access admin routes.
-  if (!decodedToken.admin) {
+  const isAdminPage = request.nextUrl.pathname.startsWith("/admin-dashboard");
+  const isAdmin = decodedToken.admin;
+  // Check if the user is trying to access admin routes
+  if (isAdminPage && !isAdmin) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Check if the admin is trying to access their account page
+  const isAccountPage = request.nextUrl.pathname.startsWith("/account");
+  if (isAccountPage && isAdmin) {
+    // Redirect admin to the home page
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -57,5 +64,7 @@ export const config = {
     "/admin-dashboard/:path*",
     "/login",
     "/register",
+    "/account",
+    "/account/:path*",
   ],
 };
