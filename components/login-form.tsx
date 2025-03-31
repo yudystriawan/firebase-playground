@@ -15,7 +15,6 @@ import { passwordValidation } from "@/validation/registerUserSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FirebaseError } from "firebase/app";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -25,9 +24,8 @@ const formSchema = z.object({
   password: passwordValidation,
 });
 
-const LoginForm = () => {
+const LoginForm = (props: { onSuccess?: () => void }) => {
   const auth = useAuth();
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,7 +38,7 @@ const LoginForm = () => {
     try {
       await auth?.loginWithEmailAndPassword(data.email, data.password);
       toast.success("Login successful!");
-      router.refresh();
+      props.onSuccess?.();
     } catch (error: FirebaseError | any) {
       console.error("Login error:", error);
       if (error.code === "auth/invalid-credential") {

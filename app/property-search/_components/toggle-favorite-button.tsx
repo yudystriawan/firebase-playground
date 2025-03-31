@@ -15,7 +15,10 @@ const ToggleFavoriteButton = (props: {
 
   const toggleFavorite = async () => {
     const tokenResult = await auth?.currentUser?.getIdTokenResult();
-    if (!tokenResult) return;
+    if (!tokenResult) {
+      router.push("/login");
+      return;
+    }
 
     if (props.isFavorite) {
       await removeFavorite(props.propertyId, tokenResult.token);
